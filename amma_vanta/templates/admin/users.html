@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Users — Admin | Amma Vanta</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--orange:#E8471A;--border:#E8D5C0;--shadow:0 4px 24px rgba(0,0,0,0.08);--radius:14px;}
+body{font-family:'DM Sans',sans-serif;background:#F5F5F5;color:#1A1A1A;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#1A1A1A;color:white;flex-shrink:0;position:fixed;height:100vh;padding-top:20px;}
+.sidebar-logo{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:12px;font-size:16px;font-weight:700;color:var(--orange);}
+.sidebar-link{display:flex;align-items:center;gap:10px;padding:11px 20px;color:rgba(255,255,255,0.65);font-size:14px;font-weight:500;text-decoration:none;border-left:3px solid transparent;transition:all 0.2s;}
+.sidebar-link:hover,.sidebar-link.active{color:white;background:rgba(255,255,255,0.06);border-left-color:var(--orange);}
+.main{margin-left:240px;flex:1;padding:28px;}
+h1{font-size:22px;font-weight:700;margin-bottom:20px;}
+.table-card{background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+th{background:#F9F5F0;padding:12px 18px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#888;}
+td{padding:14px 18px;border-bottom:1px solid #F5F0EB;font-size:13px;vertical-align:middle;}
+tr:last-child td{border:none;}
+tr:hover td{background:#FFFAF5;}
+.user-avatar{width:32px;height:32px;background:var(--orange);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}
+</style>
+</head>
+<body>
+<div class="sidebar">
+    <div class="sidebar-logo">🍱 Amma Vanta Admin</div>
+    <a href="/admin/dashboard" class="sidebar-link">📊 Dashboard</a>
+    <a href="/admin/orders"    class="sidebar-link">📦 All Orders</a>
+    <a href="/admin/users"     class="sidebar-link active">👥 Users</a>
+    <a href="/"                class="sidebar-link">🏠 View Website</a>
+    <a href="/admin/logout"    class="sidebar-link" style="color:#EF4444;">🚪 Logout</a>
+</div>
+<div class="main">
+    <h1>👥 Registered Users ({{ users|length }})</h1>
+    <div class="table-card">
+        <div style="overflow-x:auto;">
+        <table>
+            <thead><tr><th>#</th><th>User</th><th>Email</th><th>Phone</th><th>Orders</th><th>Joined</th></tr></thead>
+            <tbody>
+            {% for u in users %}
+            <tr>
+                <td style="color:#888;">{{ loop.index }}</td>
+                <td>
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <div class="user-avatar">{{ u.first_name[0]|upper }}</div>
+                        <div>
+                            <div style="font-weight:600;">{{ u.first_name }} {{ u.last_name }}</div>
+                        </div>
+                    </div>
+                </td>
+                <td style="color:#888;">{{ u.email }}</td>
+                <td>{{ u.phone }}</td>
+                <td style="font-weight:600;color:var(--orange);">{{ u.orders|length }}</td>
+                <td style="color:#888;font-size:12px;">{{ u.created_at.strftime('%d %b %Y') }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" style="text-align:center;padding:40px;color:#888;">No users yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — Admin | Amma Vanta</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--orange:#E8471A;--cream:#FDF6EE;--border:#E8D5C0;--radius:14px;}
+body{font-family:'DM Sans',sans-serif;background:#F5F5F5;color:#1A1A1A;display:flex;min-height:100vh}
+.sidebar{width:260px;background:#1A1A1A;color:white;flex-shrink:0;position:fixed;height:100vh;padding-top:24px}
+.sidebar-logo{padding:0 24px 24px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:16px;font-size:18px;font-weight:700;color:var(--orange)}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:12px 24px;color:rgba(255,255,255,0.65);font-size:14px;font-weight:500;text-decoration:none;border-left:3px solid transparent;transition:all 0.2s}
+.sidebar-link:hover,.sidebar-link.active{color:white;background:rgba(255,255,255,0.06);border-left-color:var(--orange)}
+.main{margin-left:260px;flex:1;padding:32px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.topbar h1{font-size:24px;font-weight:700}
+.btn{padding:10px 24px;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;border:none}
+.btn-orange{background:var(--orange);color:white}
+.products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.product-card{background:white;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);border:1px solid var(--border)}
+.product-card-img{height:120px;display:flex;align-items:center;justify-content:center;font-size:56px;background:var(--cream)}
+.product-card-body{padding:16px}
+.product-card-name{font-weight:700;font-size:15px;margin-bottom:4px}
+.product-card-cat{font-size:12px;color:var(--orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.product-card-price{font-size:20px;font-weight:700;color:var(--orange);margin-bottom:12px}
+.product-card-actions{display:flex;gap:8px}
+.btn-sm{padding:6px 14px;border-radius:50px;font-size:12px;font-weight:600;cursor:pointer;border:none}
+.btn-edit{background:#EFF6FF;color:#2563EB}
+.btn-delete{background:#FEE2E2;color:#DC2626}
+.toast{position:fixed;bottom:24px;right:24px;background:#059669;color:white;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:600;opacity:0;transform:translateY(20px);transition:all 0.3s;z-index:9999}
+.toast.show{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+    <div class="sidebar-logo">🍱 Amma Vanta Admin</div>
+    <a href="/admin" class="sidebar-link"><span>📊</span> Dashboard</a>
+    <a href="/admin/orders" class="sidebar-link"><span>📦</span> Orders</a>
+    <a href="/admin/products" class="sidebar-link active"><span>🍛</span> Products</a>
+    <a href="/" class="sidebar-link"><span>🏠</span> View Site</a>
+</aside>
+<main class="main">
+    <div class="topbar">
+        <h1>🍛 Products</h1>
+        <button class="btn btn-orange">+ Add New Product</button>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+</main>
+<div class="toast" id="toast"></div>
+<script>
+const PRODUCTS=[
+    {id:1,name:'Hyderabadi Biryani',category:'biryani',emoji:'🍛',price:280},
+    {id:2,name:'Gongura Mutton Curry',category:'curry',emoji:'🥘',price:320},
+    {id:3,name:'Avakaya Pickle',category:'pickles',emoji:'🫙',price:180},
+    {id:4,name:'Double Ka Meetha',category:'sweets',emoji:'🍮',price:120},
+    {id:5,name:'Pesarattu',category:'tiffins',emoji:'🫓',price:80},
+    {id:6,name:'Tomato Pappu',category:'dals',emoji:'🫕',price:90},
+    {id:7,name:'Pulihora',category:'rice',emoji:'🍚',price:110},
+    {id:8,name:'Garelu',category:'snacks',emoji:'🥐',price:60},
+];
+document.getElementById('productsGrid').innerHTML = PRODUCTS.map(p=>`
+    <div class="product-card">
+        <div class="product-card-img">${p.emoji}</div>
+        <div class="product-card-body">
+            <div class="product-card-cat">${p.category}</div>
+            <div class="product-card-name">${p.name}</div>
+            <div class="product-card-price">₹${p.price}</div>
+            <div class="product-card-actions">
+                <button class="btn-sm btn-edit" onclick="showToast('Edit coming soon!')">✏️ Edit</button>
+                <button class="btn-sm btn-delete" onclick="showToast('Delete coming soon!')">🗑️ Delete</button>
+            </div>
+        </div>
+    </div>`).join('');
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'; setTimeout(()=>t.className='toast',3000); }
+</script>
+</body>
+</html>
