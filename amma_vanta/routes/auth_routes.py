@@ -47,7 +47,7 @@ def register():
         session['user_name']  = user.first_name
         session['user_email'] = user.email
 
-        send_welcome_email(user)
+        #send_welcome_email(user)
 
         print(f"[REGISTER] New user: {user.email}")
         return jsonify({
