@@ -9,10 +9,10 @@ class Config:
     DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
     # ── SQLite DB ─────────────────────────────────────────────
-    DB_FOLDER = os.path.join(BASE_DIR, 'database')
+    DB_FOLDER = os.environ.get('RENDER_DB_PATH', os.path.join(BASE_DIR, 'database'))
     os.makedirs(DB_FOLDER, exist_ok=True)
-    SQLALCHEMY_DATABASE_URI        = os.environ.get('DATABASE_URL') or \
-                                     'sqlite:///' + os.path.join(DB_FOLDER, 'database.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+                         'sqlite:////tmp/homefood.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # ── Session / Cookie ─────────────────────────────────────
